@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { history } from "react-router-dom";
 import "./LoginSignup.css";
 
 const LoginSignup = () => {
@@ -26,8 +27,12 @@ const LoginSignup = () => {
 
             if (response.ok) {
                 setIsAuthenticated(true); // Set isAuthenticated to true on successful login
-                setSuccessMessage("Login successful!"); // Set success message state
-                // Clear success message after 2 seconds
+                setSuccessMessage("Login successful!");
+                // setTimeout(() => {
+                //     history.push("/dashboard");
+                // }, 2000); // Set success message state
+                // // Clear success message after 2 seconds
+                window.location = "/Dashboard";
               
             } else {
                 setErrorMessage(data.message || "Invalid username or password"); // Set error message state
@@ -37,6 +42,7 @@ const LoginSignup = () => {
                     setErrorMessage("Unable to login. Please try again later.");
                 }, 4000);
             }
+            
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage("An error occurred while logging in. Please try again later."); // Set error message state
@@ -59,7 +65,7 @@ const LoginSignup = () => {
                 // Clear success message after 2 seconds
                 setTimeout(() => {
                     setSuccessMessage("");
-                }, 2000);
+                }, 5000);
                 const data = await response.json();
                 console.log(data);
             } else {
@@ -152,12 +158,7 @@ const LoginSignup = () => {
                 )}
                 {/* Render success message if present */}
             </div>
-            {isAuthenticated && (
-                <div className="dashboard-container">
-                    <h2>Welcome to Dashboard!</h2>
-                    {/* Your dashboard content here */}
-                </div>
-            )}
+            
         </div>
     );
 };
